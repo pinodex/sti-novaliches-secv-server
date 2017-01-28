@@ -12,12 +12,39 @@
 |
 */
 
-// const Factory = use('Factory')
+const Database = use('Database')
 
 class DatabaseSeeder {
 
   * run () {
-    // yield Factory.model('App/Model/User').create(5)
+    yield Database
+      .table('positions')
+      .insert([
+        {
+          name: 'President',
+          order: 1
+        },
+        {
+          name: 'Vice President',
+          order: 2
+        },
+        {
+          name: 'Secretary',
+          order: 3
+        },
+        {
+          name: 'Treasurer',
+          order: 4
+        },
+        {
+          name: 'P.R.O.',
+          order: 5
+        },
+        {
+          name: 'Auditor',
+          order: 6
+        },
+      ])
   }
 
 }

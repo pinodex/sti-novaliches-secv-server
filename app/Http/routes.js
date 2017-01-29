@@ -17,4 +17,6 @@
 
 const Route = use('Route')
 
-Route.get('/', 'MainController.index')
+Route.get('/', (request, response) => {
+  response.send('SECV Server')
+})

@@ -2,6 +2,8 @@
 
 const Ws = use('Ws')
 
+Ws.io.set('transports', ['websocket'])
+
 /*
 |--------------------------------------------------------------------------
 | Global Middleware

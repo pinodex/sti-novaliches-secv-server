@@ -1,0 +1,33 @@
+/*!
+ * STI College Novaliches
+ * SEC Voting System Client
+ *
+ * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
+ */
+
+body.login {
+  background: #eee;
+}
+
+.login-container {
+  background: #fff;
+  margin-top: 150px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  box-shadow: 0 0 50px #ddd;
+  padding: 25px;
+}
+
+.login-container .title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.login-container .actions {
+  text-align: right;
+}
+
+.login-credits {
+  text-align: center;
+}

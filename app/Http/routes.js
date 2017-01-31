@@ -17,6 +17,16 @@
 
 const Route = use('Route')
 
-Route.get('/', (request, response) => {
+Route.get('/', function * (request, response) {
   response.send('SECV Server')
 })
+
+Route.group('dashboard', function () {
+
+  Route.get('/', 'Dashboard/MainController.index').as('dashboard.index')
+
+  Route.get('login', 'Dashboard/MainController.login').as('dashboard.login')
+
+  Route.post('login', 'Dashboard/MainController.login').as('dashboard.login.post')
+
+}).prefix('dashboard')

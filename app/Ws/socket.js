@@ -16,4 +16,5 @@
 
 const Ws = use('Ws')
 
-Ws.channel('vote', 'VoteController');
+Ws
+  .channel('vote', 'VoteController')

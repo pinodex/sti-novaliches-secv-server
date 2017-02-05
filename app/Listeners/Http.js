@@ -38,4 +38,24 @@ Http.handleError = function * (error, request, response) {
  * starting http server.
  */
 Http.onStart = function () {
+  const View = use('View')
+  const Route = use('Route')
+
+  View.global('url', function (route, data) {
+    data = data || {}
+    
+    return Route.url(route, data)
+  })
+
+  View.global('fieldErrors', function (validationErrors, field) {
+    let errors = []
+
+    for (let error in validationErrors) {
+      if (field == error.field) {
+        errors.push(error.message)
+      }
+    }
+
+    return errors
+  })
 }

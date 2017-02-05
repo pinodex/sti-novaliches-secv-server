@@ -9,7 +9,7 @@
 
 class MainController {
   * index (request, response) {
-    response.send('ok')
+    yield response.sendView('dashboard/index')
   }
 
   * getLogin (request, response) {

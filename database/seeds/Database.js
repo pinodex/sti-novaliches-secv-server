@@ -57,6 +57,7 @@ class DatabaseSeeder {
     yield Database
       .table('accounts')
       .insert({
+        name: 'Administrator',
         username: 'admin',
         password: yield Hash.make('admin'),
         role_id: 1

@@ -1,0 +1,7 @@
+{% set flash = old('flash') %}
+
+{% if flash %}
+  <div class="callout small {{ flash.type }}" data-closable>
+    <small>{{ flash.message }}</small>
+  </div>
+{% endif %}

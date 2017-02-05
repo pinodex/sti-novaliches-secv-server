@@ -1,5 +1,6 @@
 node_modules
 storage
+.sass-cache
 !.gitkeep
 .env
 npm-debug.log

@@ -1,0 +1,50 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Accounts' %}
+{% set active_nav = 'accounts' %}
+
+{% set error = old('error') %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="large-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+
+    <div class="large-6 columns actions">
+      <a href="{{ url('dashboard.accounts.add') }}" class="button">Create Account</a>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-12 columns">
+      {% include '../../partials/flash' %}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for account in accounts.toJSON() %}
+            <tr>
+              <td>{{ account.name }}</td>
+              <td>{{ account.username }}</td>
+              <td>
+                <a href="/roles/1">{{ account.role.name }}</a>
+              </td>
+              <td class="fit">
+                <a href="{{ url('dashboard.accounts.edit', { id: account.id }) }}" class="button hollow">Edit</a>
+                <a href="#" class="button hollow alert">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

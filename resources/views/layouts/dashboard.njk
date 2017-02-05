@@ -1,12 +1,63 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>{{ page_title | default('Dashboard') }} - SECV Server</title>
-  <link rel="stylesheet" type="text/css" href="/assets/css/foundation.css" />
-  <link rel="stylesheet" type="text/css" href="/assets/css/styles.css" />
-</head>
-<body class="{{ body_class | default("") }}">
-  {% block content %}{% endblock %}
-</body>
-</html>
+{% extends '../layouts/base' %}
+
+{%
+  set navigation = {
+    home:     { title: 'Home', route: 'dashboard.index' },
+    accounts: { title: 'Accounts', route: 'dashboard.accounts' }
+  }
+%}
+
+{% block content %}
+  <div class="top-bar">
+    <div class="top-bar-title">
+      <span data-responsive-toggle="responsive-menu">
+        <button class="menu-icon" type="button" data-toggle></button>
+      </span>
+      
+      <strong>SECV Server Dashboard</strong>
+    </div>
+
+    <div id="responsive-menu">
+      <div class="top-bar-left hide-for-large">
+        <ul class="menu">
+          {% for key, item in navigation %}
+            {% if key == active_nav %}
+              <li class="active">{{ linkTo(item.route, item.title) }}</li>
+            {% else %}
+              <li>{{ linkTo(item.route, item.title) }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="no-hover"><span>Logged in as <strong>{{ currentUser.name }}</strong> [{{ currentUser.username }}]</span></li>
+          <li>{{ linkTo('dashboard.logout', 'Logout') }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="row main">
+    <div class="large-2 columns sidebar-container show-for-large">
+      <nav class="main-sidebar">
+        <ul class="sidenav menu vertical">
+          {% for key, item in navigation %}
+            {% if key == active_nav %}
+              <li class="active">{{ linkTo(item.route, item.title) }}</li>
+            {% else %}
+              <li>{{ linkTo(item.route, item.title) }}</li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="large-10 columns">
+      <div class="main-content">
+        {% block subcontent %}{% endblock %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

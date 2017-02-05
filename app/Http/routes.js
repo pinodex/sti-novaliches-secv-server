@@ -23,10 +23,22 @@ Route.get('/', function * (request, response) {
 
 Route.group('dashboard', function () {
 
-  Route.get('/', 'Dashboard/MainController.index').as('dashboard.index')
+  Route
+    .get('/', 'Dashboard/MainController.index')
+    .as('dashboard.index')
+    .middleware('auth')
 
-  Route.get('login', 'Dashboard/MainController.login').as('dashboard.login')
+  Route
+    .get('login', 'Dashboard/MainController.getLogin')
+    .as('dashboard.login')
 
-  Route.post('login', 'Dashboard/MainController.login').as('dashboard.login.post')
+  Route
+    .post('login', 'Dashboard/MainController.postLogin')
+    .as('dashboard.login.post')
+
+  Route
+    .get('logout', 'Dashboard/MainController.getLogout')
+    .as('dashboard.logout')
+    .middleware('auth')
 
 }).prefix('dashboard')

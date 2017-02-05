@@ -3,7 +3,7 @@
 const Lucid = use('Lucid')
 
 class Position extends Lucid {
-  candidates() {
+  candidates () {
     return this.hasMany('App/Model/Candidate')
   }
 }

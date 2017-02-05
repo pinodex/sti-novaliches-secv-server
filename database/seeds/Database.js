@@ -13,6 +13,7 @@
 */
 
 const Database = use('Database')
+const Hash = use('Hash')
 
 class DatabaseSeeder {
 
@@ -45,6 +46,21 @@ class DatabaseSeeder {
           order: 6
         },
       ])
+
+    yield Database
+      .table('roles')
+      .insert({
+        name: 'Administrator',
+        permissions: '*'
+      })
+
+    yield Database
+      .table('accounts')
+      .insert({
+        username: 'admin',
+        password: yield Hash.make('admin'),
+        role_id: 1
+      })
   }
 
 }

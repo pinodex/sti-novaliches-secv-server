@@ -3,7 +3,7 @@
 const Lucid = use('Lucid')
 
 class Candidate extends Lucid {
-  position() {
+  position () {
     return this.belongsTo('App/Model/Position')
   }
 }

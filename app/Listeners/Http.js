@@ -40,6 +40,7 @@ Http.handleError = function * (error, request, response) {
 Http.onStart = function () {
   const View = use('View')
   const Route = use('Route')
+  const Request = use('Adonis/Src/Request')
 
   View.global('url', function (route, data) {
     data = data || {}

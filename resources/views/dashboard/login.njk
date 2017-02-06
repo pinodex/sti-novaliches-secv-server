@@ -15,7 +15,7 @@
           </div>
         {% endif %}
 
-        {{ form.open({ route: 'dashboard.login.post' }) }}
+        <form action="{{ url('dashboard.login') }}" method="post">
           {{ csrfField }}
 
           <div class="row">
@@ -39,7 +39,7 @@
               <button class="button expanded" type="submit">Login</button>
             </div>
           </div>
-        {{ form.close() }}
+        </form>
       </div>
       <div class="login-credits">
         <small>SECV Server &bullet; STI College Novaliches</small>

@@ -4,6 +4,9 @@ const Hash = use('Hash')
 const Account = exports = module.exports = {}
 
 Account.encryptPassword = function * (next) {
-  this.password = yield Hash.make(this.password)
+  if (this.attributes.password != this.original.password) {
+    this.password = yield Hash.make(this.password)
+  }
+  
   yield next
 }

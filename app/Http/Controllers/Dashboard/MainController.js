@@ -12,33 +12,28 @@ class MainController {
     yield response.sendView('dashboard/index')
   }
 
-  * getLogin (request, response) {
-    yield response.sendView('dashboard/login')
-  }
+  * login (request, response) {
+    if (request.method() == 'POST') {
+      try {
+        const auth = yield request.auth.attempt(
+          request.input('username'),
+          request.input('password')
+        )
+      } catch (e) {
+        yield request.withOut('password').andWith({ error: 'Invalid username and/or password' }).flash()
 
-  * postLogin (request, response) {
-    try {
-      const auth = yield request.auth.attempt(
-        request.input('username'),
-        request.input('password')
-      )
-    } catch (e) {
-      yield request
-        .withOut('password')
-        .andWith({
-          error: 'Invalid username and/or password'
-        })
-        .flash()
+        response.route('dashboard.login')
+        return
+      }
 
-      response.route('dashboard.login')
-
+      response.route('dashboard.index')
       return
     }
 
-    response.route('dashboard.index')
+    yield response.sendView('dashboard/login')
   }
 
-  * getLogout (request, response) {
+  * logout (request, response) {
     yield request.auth.logout()
 
     response.route('dashboard.login')

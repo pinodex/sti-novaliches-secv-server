@@ -39,7 +39,7 @@
               </td>
               <td class="fit">
                 <a href="{{ url('dashboard.accounts.edit', { id: account.id }) }}" class="button hollow">Edit</a>
-                <a href="#" class="button hollow alert">Delete</a>
+                <a href="{{ url('dashboard.accounts.delete', { id: account.id }) }}" class="button hollow alert">Delete</a>
               </td>
             </tr>
           {% endfor %}

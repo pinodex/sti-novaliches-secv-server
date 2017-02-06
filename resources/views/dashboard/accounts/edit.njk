@@ -2,9 +2,11 @@
 
 {% set page_title = 'Add Account' %}
 {% set active_nav = 'accounts' %}
+{% set formUrl = url('dashboard.accounts.add') %}
 
 {% if account %}
   {% set page_title = 'Edit Account' %}
+    {% set formUrl = url('dashboard.accounts.edit', { id: account.id }) %}
 {% endif %}
 
 {% block subcontent %}
@@ -24,7 +26,7 @@
         {% endfor %}
       {% endif %}
 
-      {{ form.open({ route: 'dashboard.accounts.add.post' }) }}
+      <form action="{{ formUrl }}" method="post">
         {{ csrfField }}
         <div class="row">
           <div class="large-12 columns">
@@ -90,7 +92,7 @@
             <button type="submit" class="button">Create Account</button>
           </div>
         </div>
-      {{ form.close() }}
+      </form>
     </div>
   </div>
 {% endblock %}

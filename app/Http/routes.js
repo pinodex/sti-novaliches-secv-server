@@ -30,15 +30,11 @@ Route
       .middleware('auth')
 
     Route
-      .get('login', 'Dashboard/MainController.getLogin')
+      .any('login', 'Dashboard/MainController.login')
       .as('dashboard.login')
 
     Route
-      .post('login', 'Dashboard/MainController.postLogin')
-      .as('dashboard.login.post')
-
-    Route
-      .get('logout', 'Dashboard/MainController.getLogout')
+      .get('logout', 'Dashboard/MainController.logout')
       .as('dashboard.logout')
       .middleware('auth')
 
@@ -54,16 +50,16 @@ Route
       .middleware('auth')
 
     Route
-      .get('add', 'Dashboard/AccountsController.getAdd')
+      .any('add', 'Dashboard/AccountsController.add')
       .as('dashboard.accounts.add')
 
     Route
-      .post('add', 'Dashboard/AccountsController.postAdd')
-      .as('dashboard.accounts.add.post')
+      .any(':id/edit', 'Dashboard/AccountsController.edit')
+      .as('dashboard.accounts.edit')
 
     Route
-      .get(':id/edit', 'Dashboard/AccountsController.getEdit')
-      .as('dashboard.accounts.edit')
+      .any(':id/delete', 'Dashboard/AccountsController.delete')
+      .as('dashboard.accounts.delete')
 
   })
   .prefix('dashboard/accounts')

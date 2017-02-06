@@ -1,0 +1,33 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Delete Account' %}
+{% set active_nav = 'accounts' %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="large-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-6 columns">
+      {% if old('errors') %}
+        {% for error in old('errors') %}
+          <div class="callout alert small" data-closable>
+            <small>{{ error.message | capitalize }}</small>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form action="{{ url('dashboard.accounts.delete', { id: account.id }) }}" method="post">
+        <p>Are you sure you want to delete the account <strong>{{ account.name }}</strong>?</p>
+
+        {{ csrfField }}
+
+        <button class="button alert" type="submit">Delete</button>
+        <a class="button" href="{{ url('dashboard.accounts') }}">Cancel</a>
+      </form>
+    </div>
+  </div>
+{% endblock %}

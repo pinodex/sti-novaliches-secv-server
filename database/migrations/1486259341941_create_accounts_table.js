@@ -10,7 +10,7 @@ class AccountsTableSchema extends Schema {
       table.string('name')
       table.string('username').unique()
       table.string('password', 60)
-      table.integer('role_id')
+      table.string('role')
       table.timestamp('last_login_at').nullable().defaultTo(null)
       table.timestamps()
     })

@@ -1,0 +1,66 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Add Position' %}
+{% set active_nav = 'positions' %}
+{% set formUrl = url('dashboard.positions.add') %}
+
+{% if position %}
+  {% set page_title = 'Edit Position' %}
+    {% set formUrl = url('dashboard.positions.edit', { id: position.id }) %}
+{% endif %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-4 columns">
+      {% if old('errors') %}
+        {% for error in old('errors') %}
+          <div class="callout alert small" data-closable>
+            <small>{{ error.message | capitalize }}</small>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form action="{{ formUrl }}" method="post">
+        {{ csrfField }}
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Name
+              <input type="text" name="name" value="{{ old('name', position.name) }}" autofocus />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Display Order
+
+              {% if nextDisplayOrder %}
+                <input type="number" name="order" value="{{ old('order', nextDisplayOrder) }}" />
+              {% else %}
+                <input type="number" name="order" value="{{ old('order', position.order) }}" />
+              {% endif %}
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            {% if position %}
+              <button type="submit" class="button">Save Changes</button>
+            {% else %}
+              <button type="submit" class="button">Add Position</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

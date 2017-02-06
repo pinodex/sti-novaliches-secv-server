@@ -11,6 +11,7 @@ class CandidatesTableSchema extends Schema {
       table.string('name')
       table.string('photo')
       table.text('description')
+      table.timestamp('deleted_at').nullable().defaultsTo(null)
     })
   }
 

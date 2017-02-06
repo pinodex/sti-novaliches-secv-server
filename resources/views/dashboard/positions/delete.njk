@@ -1,7 +1,7 @@
 {% extends '../../layouts/dashboard' %}
 
-{% set page_title = 'Delete Account' %}
-{% set active_nav = 'accounts' %}
+{% set page_title = 'Delete Position' %}
+{% set active_nav = 'positions' %}
 
 {% block subcontent %}
   <div class="row page-heading">
@@ -20,8 +20,9 @@
         {% endfor %}
       {% endif %}
 
-      <form action="{{ url('dashboard.accounts.delete', { id: account.id }) }}" method="post">
-        <p>Are you sure you want to delete the account <strong>{{ account.name }}</strong>?</p>
+      <form action="{{ url('dashboard.positions.delete', { id: position.id }) }}" method="post">
+        <p>Are you sure you want to delete the position <strong>{{ position.name }}</strong>?</p>
+        <p>This will disassociate candidates in this position. This action is irrever</p>
 
         {{ csrfField }}
 

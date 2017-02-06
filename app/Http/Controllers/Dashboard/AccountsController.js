@@ -2,18 +2,18 @@
 
 /*!
  * STI College Novaliches
- * SEC Voting System Client
+ * SEC Voting System Server
  *
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
+const Acl = use('App/Components/Acl')
 const Account = use('App/Model/Account')
-const Role = use('App/Model/Role')
 const Validator = use('Validator')
 
 class AccountsController {
   * index (request, response) {
-    const accounts = yield Account.with('role').fetch()
+    const accounts = yield Account.all()
 
     yield response.sendView('dashboard/accounts/index', {
       accounts: accounts
@@ -21,15 +21,13 @@ class AccountsController {
   }
 
   * add (request, response) {
-    const roles = yield Role.all()
-
     if (request.method() == 'POST') {
       const data = request.only([
         'name',
         'username',
         'password',
         'password_confirm',
-        'role_id'
+        'role'
       ])
 
       const validation = yield Validator.validate(data, Account.rules(), Account.validationMessages)
@@ -51,7 +49,7 @@ class AccountsController {
     }
 
     yield response.sendView('dashboard/accounts/edit', {
-      roles: roles
+      roles: Acl.roles
     })
   }
 
@@ -71,7 +69,7 @@ class AccountsController {
         'username',
         'password',
         'password_confirm',
-        'role_id'
+        'role'
       ])
 
       const validation = yield Validator.validate(data, Account.rules(account.id), Account.validationMessages)
@@ -98,10 +96,8 @@ class AccountsController {
       return
     }
 
-    const roles = yield Role.all()
-
     yield response.sendView('dashboard/accounts/edit', {
-      roles: roles,
+      roles: Acl.roles,
       account: account
     })
   }

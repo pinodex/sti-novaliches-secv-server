@@ -40,7 +40,7 @@ Http.handleError = function * (error, request, response) {
 Http.onStart = function () {
   const View = use('View')
   const Route = use('Route')
-  const Request = use('Adonis/Src/Request')
+  const Acl = use('App/Components/Acl')
 
   View.global('url', function (route, data) {
     data = data || {}
@@ -48,15 +48,7 @@ Http.onStart = function () {
     return Route.url(route, data)
   })
 
-  View.global('fieldErrors', function (validationErrors, field) {
-    let errors = []
-
-    for (let error in validationErrors) {
-      if (field == error.field) {
-        errors.push(error.message)
-      }
-    }
-
-    return errors
+  View.global('getRoleName', function (role) {
+    return Acl.getRoleName(role)
   })
 }

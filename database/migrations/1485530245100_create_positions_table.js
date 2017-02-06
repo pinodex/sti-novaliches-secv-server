@@ -9,6 +9,7 @@ class PositionsTableSchema extends Schema {
       table.increments('id')
       table.string('name')
       table.integer('order')
+      table.timestamp('deleted_at').nullable().defaultsTo(null)
     })
   }
 

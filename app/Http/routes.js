@@ -21,46 +21,65 @@ Route.get('/', function * (request, response) {
   response.send('SECV Server')
 })
 
-Route
-  .group('dashboard', function () {
+Route.group('dashboard', function () {
 
-    Route
-      .get('/', 'Dashboard/MainController.index')
-      .as('dashboard.index')
-      .middleware('auth')
+  Route
+    .get('/', 'Dashboard/MainController.index')
+    .as('dashboard.index')
+    .middleware('auth')
 
-    Route
-      .any('login', 'Dashboard/MainController.login')
-      .as('dashboard.login')
+  Route
+    .route('login', ['GET', 'POST'], 'Dashboard/MainController.login')
+    .as('dashboard.login')
 
-    Route
-      .get('logout', 'Dashboard/MainController.logout')
-      .as('dashboard.logout')
-      .middleware('auth')
+  Route
+    .get('logout', 'Dashboard/MainController.logout')
+    .as('dashboard.logout')
+    .middleware('auth')
 
-  })
-  .prefix('dashboard')
+})
+.prefix('dashboard')
 
-Route
-  .group('dashboard.accounts', function () {
+Route.group('dashboard.accounts', function () {
 
-    Route
-      .get('/', 'Dashboard/AccountsController.index')
-      .as('dashboard.accounts')
-      .middleware('auth')
+  Route
+    .get('/', 'Dashboard/AccountsController.index')
+    .as('dashboard.accounts')
 
-    Route
-      .any('add', 'Dashboard/AccountsController.add')
-      .as('dashboard.accounts.add')
+  Route
+    .route('add', ['GET', 'POST'], 'Dashboard/AccountsController.add')
+    .as('dashboard.accounts.add')
 
-    Route
-      .any(':id/edit', 'Dashboard/AccountsController.edit')
-      .as('dashboard.accounts.edit')
+  Route
+    .route(':id/edit', ['GET', 'POST'], 'Dashboard/AccountsController.edit')
+    .as('dashboard.accounts.edit')
 
-    Route
-      .any(':id/delete', 'Dashboard/AccountsController.delete')
-      .as('dashboard.accounts.delete')
+  Route
+    .route(':id/delete', ['GET', 'POST'], 'Dashboard/AccountsController.delete')
+    .as('dashboard.accounts.delete')
 
-  })
-  .prefix('dashboard/accounts')
-  .middleware('auth')
+})
+.prefix('dashboard/accounts')
+.middleware('auth')
+
+Route.group('dashboard.positions', function () {
+
+  Route
+    .get('/', 'Dashboard/PositionsController.index')
+    .as('dashboard.positions')
+
+  Route
+    .route('add', ['GET', 'POST'], 'Dashboard/PositionsController.add')
+    .as('dashboard.positions.add')
+
+  Route
+    .route(':id/edit', ['GET', 'POST'], 'Dashboard/PositionsController.edit')
+    .as('dashboard.positions.edit')
+
+  Route
+    .route(':id/delete', ['GET', 'POST'], 'Dashboard/PositionsController.delete')
+    .as('dashboard.positions.delete')    
+
+})
+.prefix('dashboard/positions')
+.middleware('auth')

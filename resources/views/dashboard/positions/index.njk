@@ -1,7 +1,7 @@
 {% extends '../../layouts/dashboard' %}
 
-{% set page_title = 'Accounts' %}
-{% set active_nav = 'accounts' %}
+{% set page_title = 'Positions' %}
+{% set active_nav = 'positions' %}
 
 {% set error = old('error') %}
 
@@ -12,7 +12,7 @@
     </div>
 
     <div class="small-6 columns actions">
-      <a href="{{ url('dashboard.accounts.add') }}" class="button">Create Account</a>
+      <a href="{{ url('dashboard.positions.add') }}" class="button">Add Position</a>
     </div>
   </div>
 
@@ -22,22 +22,22 @@
       <table>
         <thead>
           <tr>
+            <th>Order</th>
             <th>Name</th>
-            <th>Username</th>
-            <th>Role</th>
+            <th>Candidates</th>
             <th>Actions</th>
           </tr>
         </thead>
 
         <tbody>
-          {% for account in accounts.toJSON() %}
+          {% for position in positions.toJSON() %}
             <tr>
-              <td>{{ account.name }}</td>
-              <td>{{ account.username }}</td>
-              <td>{{ getRoleName(account.role) }}</td>
+              <td>{{ position.order }}</td>
+              <td>{{ position.name }}</td>
+              <td>{{ position.candidates.length }}</td>
               <td class="fit">
-                <a href="{{ url('dashboard.accounts.edit', { id: account.id }) }}" class="button hollow">Edit</a>
-                <a href="{{ url('dashboard.accounts.delete', { id: account.id }) }}" class="button hollow alert">Delete</a>
+                <a href="{{ url('dashboard.positions.edit', { id: position.id }) }}" class="button hollow">Edit</a>
+                <a href="{{ url('dashboard.positions.delete', { id: position.id }) }}" class="button hollow alert">Delete</a>
               </td>
             </tr>
           {% endfor %}

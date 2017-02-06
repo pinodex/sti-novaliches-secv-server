@@ -46,21 +46,14 @@ class DatabaseSeeder {
           order: 6
         },
       ])
-
-    yield Database
-      .table('roles')
-      .insert({
-        name: 'Administrator',
-        permissions: '*'
-      })
-
+      
     yield Database
       .table('accounts')
       .insert({
         name: 'Administrator',
         username: 'admin',
         password: yield Hash.make('admin'),
-        role_id: 1
+        role: 'admin'
       })
   }
 

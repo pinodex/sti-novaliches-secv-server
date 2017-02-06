@@ -2,7 +2,7 @@
 
 /*!
  * STI College Novaliches
- * SEC Voting System Client
+ * SEC Voting System Server
  *
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
@@ -11,10 +11,6 @@ const Lucid = use('Lucid')
 const Hash = use('Hash')
 
 class Account extends Lucid {
-  role () {
-    return this.belongsTo('App/Model/Role')
-  }
-
   static boot () { 
     super.boot()
     

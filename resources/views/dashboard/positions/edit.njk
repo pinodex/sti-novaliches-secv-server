@@ -4,7 +4,7 @@
 {% set active_nav = 'positions' %}
 {% set formUrl = url('dashboard.positions.add') %}
 
-{% if position %}
+{% if position.id %}
   {% set page_title = 'Edit Position' %}
     {% set formUrl = url('dashboard.positions.edit', { id: position.id }) %}
 {% endif %}

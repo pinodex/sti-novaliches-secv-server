@@ -47,7 +47,7 @@ Route.group('dashboard.accounts', function () {
     .as('dashboard.accounts')
 
   Route
-    .route('add', ['GET', 'POST'], 'Dashboard/AccountsController.add')
+    .route('add', ['GET', 'POST'], 'Dashboard/AccountsController.edit')
     .as('dashboard.accounts.add')
 
   Route
@@ -69,7 +69,7 @@ Route.group('dashboard.positions', function () {
     .as('dashboard.positions')
 
   Route
-    .route('add', ['GET', 'POST'], 'Dashboard/PositionsController.add')
+    .route('add', ['GET', 'POST'], 'Dashboard/PositionsController.edit')
     .as('dashboard.positions.add')
 
   Route
@@ -82,4 +82,26 @@ Route.group('dashboard.positions', function () {
 
 })
 .prefix('dashboard/positions')
+.middleware('auth')
+
+Route.group('dashboard.candidates', function () {
+
+  Route
+    .get('/', 'Dashboard/CandidatesController.index')
+    .as('dashboard.candidates')
+
+  Route
+    .route('add', ['GET', 'POST'], 'Dashboard/CandidatesController.edit')
+    .as('dashboard.candidates.add')
+
+  Route
+    .route(':id/edit', ['GET', 'POST'], 'Dashboard/CandidatesController.edit')
+    .as('dashboard.candidates.edit')
+
+  Route
+    .route(':id/delete', ['GET', 'POST'], 'Dashboard/CandidatesController.delete')
+    .as('dashboard.candidates.delete')    
+
+})
+.prefix('dashboard/candidates')
 .middleware('auth')

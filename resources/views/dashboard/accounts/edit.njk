@@ -4,7 +4,7 @@
 {% set active_nav = 'accounts' %}
 {% set formUrl = url('dashboard.accounts.add') %}
 
-{% if account %}
+{% if account.id %}
   {% set page_title = 'Edit Account' %}
     {% set formUrl = url('dashboard.accounts.edit', { id: account.id }) %}
 {% endif %}

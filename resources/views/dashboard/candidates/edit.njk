@@ -1,0 +1,88 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Add Candidate' %}
+{% set active_nav = 'candidates' %}
+{% set formUrl = url('dashboard.candidates.add') %}
+
+{% if candidate.id %}
+  {% set page_title = 'Edit Candidate' %}
+    {% set formUrl = url('dashboard.candidates.edit', { id: candidate.id }) %}
+{% endif %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-4 columns">
+      {% if old('errors') %}
+        {% for error in old('errors') %}
+          <div class="callout alert small" data-closable>
+            <small>{{ error.message | capitalize }}</small>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form action="{{ formUrl }}" method="post" enctype="multipart/form-data">
+        {{ csrfField }}
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Name
+              <input type="text" name="name" value="{{ old('name', candidate.name) }}" autofocus />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Position
+              <select name="position_id">
+                {% for position in positions.toJSON() %}
+                  {% if old('position_id', candidate.position_id) == position.id %}
+                    <option value="{{ position.id }}" selected>{{ position.name }}</option>
+                  {% else %}
+                    <option value="{{ position.id }}">{{ position.name }}</option>
+                  {% endif %}
+                {% endfor %}
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Photo
+              <input type="file" name="photo" />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Description
+              <textarea name="description" class="desc-textarea">{{ old('description', candidate.description) }}</textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            {% if position %}
+              <button type="submit" class="button">Save Changes</button>
+            {% else %}
+              <button type="submit" class="button">Add Candidate</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

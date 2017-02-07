@@ -1,0 +1,46 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Candidates' %}
+{% set active_nav = 'candidates' %}
+
+{% set error = old('error') %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+
+    <div class="small-6 columns actions">
+      <a href="{{ url('dashboard.candidates.add') }}" class="button">Add Candidate</a>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-12 columns">
+      {% include '../../partials/flash' %}
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for candidate in candidates.toJSON() %}
+            <tr>
+              <td>{{ candidate.name }}</td>
+              <td>{{ candidate.position.name | default('Unassigned') }}</td>
+              <td class="fit">
+                <a href="{{ url('dashboard.candidates.edit', { id: candidate.id }) }}" class="button hollow">Edit</a>
+                <a href="{{ url('dashboard.candidates.delete', { id: candidate.id }) }}" class="button hollow alert">Delete</a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}

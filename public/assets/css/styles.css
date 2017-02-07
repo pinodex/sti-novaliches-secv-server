@@ -4916,4 +4916,9 @@ table td.fit {
   color: #fff;
 }
 
+.desc-textarea {
+  height: 200px;
+  resize: none;
+}
+
 /*# sourceMappingURL=styles.css.map */

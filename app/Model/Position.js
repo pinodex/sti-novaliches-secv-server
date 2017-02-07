@@ -14,6 +14,20 @@ class Position extends Lucid {
     return this.hasMany('App/Model/Candidate')
   }
 
+  static rules (id) {
+    return {
+      name: 'required',
+      order: 'required'
+    }
+  }
+
+  static get validationMessages () {
+    return {
+      'name.required': 'Name field cannot be empty',
+      'order.required': 'Order field cannot be empty'
+    }
+  }
+
   static get createTimestamp () {
     return null
   }

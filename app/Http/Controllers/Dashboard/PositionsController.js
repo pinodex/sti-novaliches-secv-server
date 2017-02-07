@@ -8,6 +8,7 @@
  */
 
 const Position = use('App/Model/Position')
+const Validator = use('Validator')
 
 class PositionsController {
   * index (request, response) {
@@ -18,26 +19,13 @@ class PositionsController {
     })
   }
 
-  * add (request, response) {
-    const lastPosition = yield Position.query().orderBy('id', 'DESC').first()
-
-    if (request.method() == 'POST') {
-      const data = request.only(['name', 'order'])
-      
-      yield Position.create(data)
-      yield request.with({ flash: { type: 'success', message: `${data.name} position has been added` }}).flash()
-      
-      response.route('dashboard.positions')
-      return
-    }
-
-    yield response.sendView('dashboard/positions/edit', {
-      nextDisplayOrder: lastPosition.order + 1
-    })
-  }
-
   * edit (request, response) {
-    const position = yield Position.find(request.param('id'))
+    const paramId = request.param('id')
+    let position = new Position()
+
+    if (paramId) {
+      position = yield Position.find(paramId)
+    }
 
     if (position == null) {
       yield request.with({ flash: { type: 'alert', message: 'Cannot find requested position' }}).flash()
@@ -48,6 +36,19 @@ class PositionsController {
 
     if (request.method() == 'POST') {
       const data = request.only(['name', 'order'])
+      const validation = yield Validator.validate(data, Position.rules(), Position.validationMessages)
+
+      if (validation.fails()) {
+        yield request.withAll().andWith({ errors: validation.messages() }).flash()
+
+        if (position.id) {
+          response.route('dashboard.positions.edit', { id: position.id })
+          return
+        }
+
+        response.route('dashboard.positions.add')
+        return
+      }
 
       position.fill(data)
 

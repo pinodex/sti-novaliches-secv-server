@@ -20,41 +20,13 @@ class AccountsController {
     })
   }
 
-  * add (request, response) {
-    if (request.method() == 'POST') {
-      const data = request.only([
-        'name',
-        'username',
-        'password',
-        'password_confirm',
-        'role'
-      ])
-
-      const validation = yield Validator.validate(data, Account.rules(), Account.validationMessages)
-
-      if (validation.fails()) {
-        yield request.withAll().andWith({ errors: validation.messages() }).flash()
-
-        response.route('dashboard.accounts.add')
-        return
-      }
-
-      delete data['password_confirm']
-      
-      yield Account.create(data)
-      yield request.with({ flash: { type: 'success', message: `Account ${data.name} has been created` }}).flash()
-      
-      response.route('dashboard.accounts')
-      return
-    }
-
-    yield response.sendView('dashboard/accounts/edit', {
-      roles: Acl.roles
-    })
-  }
-
   * edit (request, response) {
-    const account = yield Account.find(request.param('id'))
+    const paramId = request.param('id')
+    let account = new Account()
+
+    if (paramId) {
+      account = yield Account.find(paramId)
+    }
 
     if (account == null) {
       yield request.with({ flash: { type: 'alert', message: 'Cannot find requested account' }}).flash()
@@ -77,7 +49,12 @@ class AccountsController {
       if (validation.fails()) {
         yield request.withAll().andWith({ errors: validation.messages() }).flash()
 
-        response.route('dashboard.accounts.edit', { id: account.id })
+        if (account.id) {
+          response.route('dashboard.accounts.edit', { id: account.id })
+          return
+        }
+
+        response.route('dashboard.accounts.add')
         return
       }
 

@@ -69,35 +69,38 @@ class CandidatesController {
         return
       }
 
-      if (photo.file.size == 0 || CandidatesController.allowedUploadMimes.indexOf(photo.file.type) === -1) {
-        yield request.withAll().andWith({ errors: [{ message: 'Please upload a valid photo' }]}).flash()
+      if (photo.file.size != 0 || !candidate.id) {
+        if (CandidatesController.allowedUploadMimes.indexOf(photo.file.type) === -1) {
+          yield request.withAll().andWith({ errors: [{ message: 'Please upload a valid photo' }]}).flash()
 
-        if (candidate.id) {
-          response.route('dashboard.candidates.edit', { id: candidate.id })
+          if (candidate.id) {
+            response.route('dashboard.candidates.edit', { id: candidate.id })
+            return
+          }
+
+          response.route('dashboard.candidates.add')
           return
         }
 
-        response.route('dashboard.candidates.add')
-        return
-      }
+        const fileName = `${slugify(data.name)}-${randomstring.generate(8)}${path.extname(photo.file.name)}`
 
-      const fileName = `${slugify(data.name)}-${randomstring.generate(8)}${path.extname(photo.file.name)}`
+        try {
+          fs.copySync(photo.file.path, Helpers.storagePath(`uploads/${fileName}`))
+        } catch (e) {
+          yield request.withAll().andWith({ errors: [{ message: 'File upload error' }]}).flash()
 
-      try {
-        fs.copySync(photo.file.path, Helpers.storagePath(`uploads/${fileName}`))
-      } catch (e) {
-        yield request.withAll().andWith({ errors: [{ message: 'File upload error' }]}).flash()
+          if (candidate.id) {
+            response.route('dashboard.candidates.edit', { id: candidate.id })
+            return
+          }
 
-        if (candidate.id) {
-          response.route('dashboard.candidates.edit', { id: candidate.id })
+          response.route('dashboard.candidates.add')
           return
         }
 
-        response.route('dashboard.candidates.add')
-        return
+        data['photo'] = fileName
       }
 
-      data['photo'] = fileName
       candidate.fill(data)
       
       yield candidate.save()
@@ -108,7 +111,30 @@ class CandidatesController {
     }
 
     yield response.sendView('dashboard/candidates/edit', {
-      positions: positions
+      positions: positions,
+      candidate: candidate
+    })
+  }
+
+  * delete (request, response) {
+    const candidate = yield Candidate.find(request.param('id'))
+
+    if (candidate == null) {
+      yield request.with({ flash: { type: 'alert', message: 'Cannot find requested candidate' }}).flash()
+
+      response.route('dashboard.candidates')
+      return
+    }
+
+    if (request.method() == 'POST') {
+      yield candidate.delete()
+      yield request.with({ flash: { type: 'success', message: `Candidate ${candidate.name} has been deleted` }}).flash()
+      
+      response.route('dashboard.candidates')
+    }
+
+    yield response.sendView('dashboard/candidates/delete', {
+      candidate: candidate
     })
   }
 }

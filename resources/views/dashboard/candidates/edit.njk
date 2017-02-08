@@ -58,7 +58,7 @@
         <div class="row">
           <div class="large-12 columns">
             <label>
-              Photo
+              Photo {% if candidate.id %}(leave blank if not changing){% endif %}
               <input type="file" name="photo" />
             </label>
           </div>
@@ -75,7 +75,7 @@
 
         <div class="row">
           <div class="large-12 columns">
-            {% if position %}
+            {% if candidate.id %}
               <button type="submit" class="button">Save Changes</button>
             {% else %}
               <button type="submit" class="button">Add Candidate</button>

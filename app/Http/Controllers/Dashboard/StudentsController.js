@@ -7,6 +7,7 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
+const SecureRandom = use('App/Components/SecureRandom')
 const Student = use('App/Model/Student')
 const Validator = use('Validator')
 
@@ -39,6 +40,31 @@ class StudentsController {
     yield response.sendView('dashboard/students/index', {
       students: students.toJSON(),
       query: request.get()
+    })
+  }
+
+  * code (request, response) {
+    const student = yield Student.find(request.param('id'))
+
+    if (student == null) {
+      yield request.with({ flash: { type: 'alert', message: 'Cannot find requested student' }}).flash()
+
+      response.route('dashboard.students')
+      return
+    }
+
+    if (student.code == null || request.method() == 'POST') {
+      student.code = SecureRandom.generateALPHAnumeric(5)
+      yield student.save()
+
+      if (request.method() == 'POST') {
+        response.route('dashboard.students.code', { id: student.id })
+        return
+      }
+    }
+
+    yield response.sendView('dashboard/students/code', {
+      student: student.toJSON()
     })
   }
 

@@ -1,0 +1,33 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Student Code' %}
+{% set active_nav = 'students' %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-4 large-offset-4 columns center">
+      <div class="card">
+        <div class="card-divider">
+          {{ student.name }}
+        </div>
+
+        <div class="card-section">
+          <h1>{{ student.code }}</h1>
+        </div>
+
+        <div class="card-divider">
+          <form action="{{ url('dashboard.students.code', { id: student.id }) }}" method="post">
+            {{ csrfField }}
+            <button class="button alert expanded">Reset Code</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

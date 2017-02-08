@@ -4923,4 +4923,12 @@ table td.fit {
   resize: none;
 }
 
+.center {
+  text-align: center;
+}
+
+.button:last-child {
+  margin-bottom: 0;
+}
+
 /*# sourceMappingURL=styles.css.map */

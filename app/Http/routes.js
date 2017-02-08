@@ -117,6 +117,10 @@ Route.group('dashboard.students', function () {
     .as('dashboard.students.add')
 
   Route
+    .route(':id/code', ['GET', 'POST'], 'Dashboard/StudentsController.code')
+    .as('dashboard.students.code')
+
+  Route
     .route(':id/edit', ['GET', 'POST'], 'Dashboard/StudentsController.edit')
     .as('dashboard.students.edit')
 

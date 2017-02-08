@@ -39,6 +39,7 @@
                 <tr>
                   <td>{{ student.name }}</td>
                   <td class="fit">
+                    <a href="{{ url('dashboard.students.code', { id: student.id }) }}" class="button hollow secondary">Get Code</a>
                     <a href="{{ url('dashboard.students.edit', { id: student.id }) }}" class="button hollow">Edit</a>
                     <a href="{{ url('dashboard.students.delete', { id: student.id }) }}" class="button hollow alert">Delete</a>
                   </td>

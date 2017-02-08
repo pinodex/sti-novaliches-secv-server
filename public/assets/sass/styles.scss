@@ -161,3 +161,11 @@ table {
   height: 200px;
   resize: none;
 }
+
+.center {
+  text-align: center;
+}
+
+.button:last-child {
+  margin-bottom: 0;
+}

@@ -2936,7 +2936,7 @@ select[multiple] {
 
 .card-divider {
   padding: 1rem;
-  background: #e6e6e6;
+  background: #ddd;
 }
 .card-divider > :last-child {
   margin-bottom: 0;
@@ -4827,6 +4827,7 @@ body {
 }
 
 .top-bar {
+  box-shadow: 0 0 10px #333;
   position: fixed;
   top: 0;
   width: 100%;
@@ -4894,6 +4895,7 @@ body {
 
 table {
   background: #fff;
+  box-shadow: 0 0 10px #ddd;
 }
 table .button {
   margin-bottom: 0;

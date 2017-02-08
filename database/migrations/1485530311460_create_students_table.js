@@ -8,7 +8,9 @@ class StudentsTableSchema extends Schema {
     this.create('students', (table) => {
       table.string('id').primary()
       table.string('code').nullable()
-      table.string('name')
+      table.string('last_name')
+      table.string('first_name')
+      table.string('middle_name')
     })
   }
 

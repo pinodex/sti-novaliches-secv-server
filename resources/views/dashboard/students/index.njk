@@ -1,0 +1,115 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Students' %}
+{% set active_nav = 'students' %}
+
+{% set error = old('error') %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+
+    <div class="small-6 columns actions">
+      <a href="{{ url('dashboard.students.add') }}" class="button">Add Student</a>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-12 columns">
+          {% include '../../partials/flash' %}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-8 columns">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for student in students.data %}
+                <tr>
+                  <td>{{ student.name }}</td>
+                  <td class="fit">
+                    <a href="{{ url('dashboard.students.edit', { id: student.id }) }}" class="button hollow">Edit</a>
+                    <a href="{{ url('dashboard.students.delete', { id: student.id }) }}" class="button hollow alert">Delete</a>
+                  </td>
+                </tr>
+              {% else %}
+                <tr>
+                  <td colspan="2">No results</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          {% if students.lastPage > 1 %}
+            <div class="row">
+              <div class="large-2 columns">
+                <select name="page" class="paginator">
+                  {% for i in range(1, students.lastPage) %}
+                    {% if i == students.currentPage %}
+                      <option value="{{ i }}" selected>{{ i }}</option>
+                    {% else %}
+                      <option value="{{ i }}">{{ i }}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="large-4 columns">
+          <div class="card">
+            <div class="card-divider">Search Student</div>
+            <div class="card-section">
+              <form>
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>
+                      Student ID
+                      <input type="text" name="id" value="{{ query.id }}" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>
+                      Last Name
+                      <input type="text" name="last_name" value="{{ query.last_name }}" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="large-12 columns">
+                    <label>
+                      First Name
+                      <input type="text" name="first_name" value="{{ query.first_name }}" />
+                    </label>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="large-12 columns">
+                    <button type="submit" class="button">Search</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

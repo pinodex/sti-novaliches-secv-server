@@ -1,0 +1,84 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Add Student' %}
+{% set active_nav = 'students' %}
+{% set formUrl = url('dashboard.students.add') %}
+
+{% if student.id %}
+  {% set page_title = 'Edit Student' %}
+    {% set formUrl = url('dashboard.students.edit', { id: student.id }) %}
+{% endif %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-4 columns">
+      {% if old('errors') %}
+        {% for error in old('errors') %}
+          <div class="callout alert small" data-closable>
+            <small>{{ error.message | capitalize }}</small>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <form action="{{ formUrl }}" method="post">
+        {{ csrfField }}
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Student ID
+              {% if student.id %}
+                <h5>{{ student.id }}</h5>
+              {% else %}
+                <input type="text" name="id" value="{{ old('id', student.id) }}" autofocus />
+              {% endif %}
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Last Name
+              <input type="text" name="last_name" value="{{ old('last_name', student.last_name) }}" autofocus />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              First Name
+              <input type="text" name="first_name" value="{{ old('first_name', student.first_name) }}" autofocus />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            <label>
+              Middle Name
+              <input type="text" name="middle_name" value="{{ old('middle_name', student.middle_name) }}" autofocus />
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="large-12 columns">
+            {% if student.id %}
+              <button type="submit" class="button">Save Changes</button>
+            {% else %}
+              <button type="submit" class="button">Create Account</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

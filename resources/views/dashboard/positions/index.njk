@@ -40,6 +40,10 @@
                 <a href="{{ url('dashboard.positions.delete', { id: position.id }) }}" class="button hollow alert">Delete</a>
               </td>
             </tr>
+          {% else %}
+            <tr>
+              <td colspan="4">No results</td>
+            </tr>
           {% endfor %}
         </tbody>
       </table>

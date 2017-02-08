@@ -10,7 +10,37 @@
 const Lucid = use('Lucid')
 
 class Student extends Lucid {
+  static get computed () {
+    return ['name']
+  }
 
+  getName() {
+    return `${this.last_name}, ${this.first_name} ${this.middle_name}`
+  }
+
+  static rules (id) {
+    return {
+      id: 'required',
+      last_name: 'required',
+      first_name: 'required'
+    }
+  }
+
+  static get validationMessages () {
+    return {
+      'id.required': 'Student ID field is required',
+      'last_name.required': 'Last name field cannot be empty',
+      'first_name.required': 'First name field cannot be empty',
+    }
+  }
+
+  static get createTimestamp () {
+    return null
+  }
+
+  static get updateTimestamp () {
+    return null
+  }
 }
 
 module.exports = Student

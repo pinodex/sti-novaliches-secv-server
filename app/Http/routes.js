@@ -105,3 +105,25 @@ Route.group('dashboard.candidates', function () {
 })
 .prefix('dashboard/candidates')
 .middleware('auth')
+
+Route.group('dashboard.students', function () {
+
+  Route
+    .get('/', 'Dashboard/StudentsController.index')
+    .as('dashboard.students')
+
+  Route
+    .route('add', ['GET', 'POST'], 'Dashboard/StudentsController.edit')
+    .as('dashboard.students.add')
+
+  Route
+    .route(':id/edit', ['GET', 'POST'], 'Dashboard/StudentsController.edit')
+    .as('dashboard.students.edit')
+
+  Route
+    .route(':id/delete', ['GET', 'POST'], 'Dashboard/StudentsController.delete')
+    .as('dashboard.students.delete')    
+
+})
+.prefix('dashboard/students')
+.middleware('auth')

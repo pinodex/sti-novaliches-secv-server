@@ -14,6 +14,14 @@ class Student extends Lucid {
     return ['name']
   }
 
+  token () {
+    return this.hasOne('App/Model/StudentToken')
+  }
+
+  flag () {
+    return this.hasOne('App/Model/StudentFlag')
+  }
+
   getName() {
     return `${this.last_name}, ${this.first_name} ${this.middle_name}`
   }

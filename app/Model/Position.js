@@ -39,6 +39,10 @@ class Position extends Lucid {
   static get deleteTimestamp () {
     return 'deleted_at'
   }
+
+  static get hidden () {
+    return ['deleted_at']
+  }
 }
 
 module.exports = Position

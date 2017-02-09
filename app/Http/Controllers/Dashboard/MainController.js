@@ -7,8 +7,14 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
+const Result = use('App/Components/Result')
+
 class MainController {
   * index (request, response) {
+    const r = yield Result.get()
+
+    console.log(r)
+
     yield response.sendView('dashboard/index')
   }
 

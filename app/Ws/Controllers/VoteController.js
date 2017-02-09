@@ -8,6 +8,7 @@
  */
 
 const Student = use('App/Model/Student'),
+      Result = use('App/Components/Result'),
       Voting = use('App/Components/Voting'),
       StudentWsAuth = use('App/Components/StudentWsAuth'),
       ElectionRepository = use('App/Repositories/ElectionRepository'),
@@ -77,6 +78,11 @@ class VoteController {
     yield vote.commit()
 
     this.socket.toMe().emit('cast')
+    this.socket.emit('update', yield Result.get())
+  }
+
+  * onGetUpdate () {
+    this.socket.emit('update', yield Result.get())
   }
 }
 

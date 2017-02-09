@@ -42,9 +42,8 @@ class StudentWsAuth {
       return token
     }
 
-    yield this.student.token().update({
-      value: token
-    })
+    this.student.relations.token.value = token
+    yield this.student.relations.token.save()
 
     return token
   }

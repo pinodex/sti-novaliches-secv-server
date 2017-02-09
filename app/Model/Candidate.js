@@ -14,6 +14,10 @@ class Candidate extends Lucid {
     return this.belongsTo('App/Model/Position')
   }
 
+  votes () {
+    return this.hasMany('App/Model/Vote')
+  }
+
   static rules (id) {
     return {
       position_id: 'required',

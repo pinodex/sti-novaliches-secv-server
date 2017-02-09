@@ -9,17 +9,13 @@
 
 const Lucid = use('Lucid')
 
-class StudentToken extends Lucid {
-  static get primaryKey () {
-    return 'student_id'
-  }
-  
+class Vote extends Lucid {
   student () {
     return this.belongsTo('App/Model/Student')
   }
-  
-  static get createTimestamp () {
-    return null
+
+  candidate () {
+    return this.belongsTo('App/Model/Candidate')
   }
 
   static get updateTimestamp () {
@@ -27,4 +23,4 @@ class StudentToken extends Lucid {
   }
 }
 
-module.exports = StudentToken
+module.exports = Vote

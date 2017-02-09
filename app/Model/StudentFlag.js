@@ -10,6 +10,10 @@
 const Lucid = use('Lucid')
 
 class StudentFlag extends Lucid {
+  static get primaryKey () {
+    return 'student_id'
+  }
+
   static get createTimestamp () {
     return null
   }

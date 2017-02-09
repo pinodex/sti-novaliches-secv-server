@@ -53,6 +53,8 @@ class StudentWsAuth {
       yield this.student.flag().create({
         can_vote: true
       })
+
+      yield this.student.related('flag').load()
     }
   }
 
@@ -64,7 +66,7 @@ class StudentWsAuth {
       .first()
 
     if (student == null) {
-      throw new Error(`Cannot find student with code ${code}`)
+      throw new Error(`Invalid Identification Code`)
     }
 
     let instance = new this(student)

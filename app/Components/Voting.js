@@ -50,6 +50,10 @@ class Voting {
     this.votes.push(candidateId)
   }
 
+  setVotes (candidates) {
+    this.votes = candidates
+  }
+
   * commit () {
     if (this.student == null) {
       const eligible = yield this.checkEligibility()

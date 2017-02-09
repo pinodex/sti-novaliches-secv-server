@@ -8,6 +8,7 @@
  */
 
 const Student = use('App/Model/Student'),
+      Voting = use('App/Components/Voting'),
       StudentWsAuth = use('App/Components/StudentWsAuth'),
       ElectionRepository = use('App/Repositories/ElectionRepository'),
       Helpers = use('Helpers')
@@ -49,13 +50,33 @@ class VoteController {
     try {
       const auth = yield StudentWsAuth.try(code)
 
-      this.socket.toMe().emit('response:auth', {
+      if (!auth.getFlags().can_vote) {
+        this.socket.toMe().emit('auth:error', 'You can only vote once')
+        return
+      }
+
+      this.socket.toMe().emit('auth', {
         token: yield auth.getToken(),
         user: auth.getUser()
       })
     } catch (e) {
-      this.socket.toMe().emit('response:auth', null)
+      this.socket.toMe().emit('auth:error', e.message)
     }
+  }
+
+  * onCast (data) {
+    const vote = new Voting(data.token)
+    const isEligible = yield vote.checkEligibility()
+
+    if (!isEligible) {
+      this.socket.toMe().emit('auth:error', 'You are not eligible to vote')
+      return
+    }
+
+    vote.setVotes(data.ballot)
+    yield vote.commit()
+
+    this.socket.toMe().emit('cast')
   }
 }
 

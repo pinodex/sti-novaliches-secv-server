@@ -1,1 +1,10 @@
-Error {{ error.status }}
+{% extends '../layouts/base' %}
+
+{% block content %}
+  <div class="large-10 columns">
+    <div class="main-content">
+      <h1>Error</h1>
+      <p>{{ error.status }}</p>
+    </div>
+  </div>
+{% endblock %}

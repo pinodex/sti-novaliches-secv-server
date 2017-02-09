@@ -60,7 +60,7 @@ Route.group('dashboard.accounts', function () {
 
 })
 .prefix('dashboard/accounts')
-.middleware('auth')
+.middleware('auth:admin')
 
 Route.group('dashboard.positions', function () {
 
@@ -82,7 +82,7 @@ Route.group('dashboard.positions', function () {
 
 })
 .prefix('dashboard/positions')
-.middleware('auth')
+.middleware('auth:admin')
 
 Route.group('dashboard.candidates', function () {
 
@@ -104,30 +104,34 @@ Route.group('dashboard.candidates', function () {
 
 })
 .prefix('dashboard/candidates')
-.middleware('auth')
+.middleware('auth:admin')
 
 Route.group('dashboard.students', function () {
 
   Route
     .get('/', 'Dashboard/StudentsController.index')
     .as('dashboard.students')
+    .middleware('auth')
 
   Route
     .route('add', ['GET', 'POST'], 'Dashboard/StudentsController.edit')
     .as('dashboard.students.add')
+    .middleware('auth:admin')
 
   Route
     .route(':id/code', ['GET', 'POST'], 'Dashboard/StudentsController.code')
     .as('dashboard.students.code')
+    .middleware('auth')
 
   Route
     .route(':id/edit', ['GET', 'POST'], 'Dashboard/StudentsController.edit')
     .as('dashboard.students.edit')
+    .middleware('auth:admin')
 
   Route
     .route(':id/delete', ['GET', 'POST'], 'Dashboard/StudentsController.delete')
-    .as('dashboard.students.delete')    
+    .as('dashboard.students.delete')
+    .middleware('auth:admin')
 
 })
 .prefix('dashboard/students')
-.middleware('auth')

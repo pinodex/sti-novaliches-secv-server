@@ -29,7 +29,7 @@ class StudentsController {
         }
 
         if (searchFirstName) {
-          this.students.where('first_name', 'LIKE', `%${searchFirstName}%`)
+          this.where('first_name', 'LIKE', `%${searchFirstName}%`)
         }
       })
       .orderBy('last_name')

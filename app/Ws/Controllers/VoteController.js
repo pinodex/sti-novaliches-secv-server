@@ -8,11 +8,11 @@
  */
 
 const Student = use('App/Model/Student'),
-      Result = use('App/Components/Result'),
       Voting = use('App/Components/Voting'),
       StudentWsAuth = use('App/Components/StudentWsAuth'),
       ElectionRepository = use('App/Repositories/ElectionRepository'),
-      Helpers = use('Helpers')
+      Helpers = use('Helpers'),
+      Event = use('Event')
 
 const fs = require('fs')
 
@@ -78,11 +78,6 @@ class VoteController {
     yield vote.commit()
 
     this.socket.toMe().emit('cast')
-    this.socket.emit('update', yield Result.get())
-  }
-
-  * onGetUpdate () {
-    this.socket.emit('update', yield Result.get())
   }
 }
 

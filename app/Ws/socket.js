@@ -16,4 +16,6 @@
 
 const Ws = use('Ws')
 
+Ws.channel('main', 'MainController')
 Ws.channel('vote', 'VoteController')
+Ws.channel('live', 'LiveController')

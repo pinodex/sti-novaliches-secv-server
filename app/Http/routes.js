@@ -135,3 +135,23 @@ Route.group('dashboard.students', function () {
 
 })
 .prefix('dashboard/students')
+
+Route.group('dashboard.results', function () {
+
+  Route
+    .get('/', 'Dashboard/ResultsController.index')
+    .as('dashboard.results')
+
+})
+.prefix('dashboard/results')
+.middleware('auth:admin')
+
+Route.group('dashboard.stats', function () {
+
+  Route
+    .get('/', 'Dashboard/StatsController.index')
+    .as('dashboard.stats')
+
+})
+.prefix('dashboard/stats')
+.middleware('auth:admin')

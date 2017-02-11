@@ -1,0 +1,52 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Results' %}
+{% set active_nav = 'results' %}
+
+{% set error = old('error') %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-12 columns">
+          {% include '../../partials/flash' %}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-12 columns">
+          {% for entry in results %}
+            <h5>{{ entry.position.name }}</h5>
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Candidate Name</th>
+                  <th>Votes</th>
+                  <th>Percentage</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for candidate in entry.candidates %}
+                  <tr>
+                    <td>{{ candidate.name }}</td>
+                    <td class="fit">{{ candidate.votes }}</td>
+                    <td class="fit">{{ candidate.percentage }}%</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

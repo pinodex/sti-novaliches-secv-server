@@ -16,7 +16,7 @@ class Result {
     return 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
   }
 
-  static * get () {
+  static * get (anonymous = true) {
     const data = []
     const positions = yield Position.query()
       .with('candidates', 'candidates.votes')
@@ -34,22 +34,25 @@ class Result {
       })
 
       position.relations.candidates.values().each(function (candidate, i) {
-        let votes = 0
-        let percentage = 0
+        const entry = {
+          name: candidate.name,
+          votes: 0,
+          percentage: 0
+        }
+
+        if (anonymous) {
+          entry.name = `Candidate ${Result.alphabet[i]}`
+        }
 
         if (!(candidate.relations.votes instanceof Array)) {
-          votes = candidate.relations.votes.size()
+          entry.votes = candidate.relations.votes.size()
         }
 
-        if (votes > 0 && totalVotes > 0) {
-          percentage = ((votes / totalVotes) * 100).toFixed(2)
+        if (entry.votes > 0 && totalVotes > 0) {
+          entry.percentage = ((entry.votes / totalVotes) * 100).toFixed(1)
         }
 
-        candidates.push({
-          name: `Candidate ${Result.alphabet[i]}`,
-          votes: votes,
-          percentage: percentage
-        })
+        candidates.push(entry)
       })
 
       const entry = {

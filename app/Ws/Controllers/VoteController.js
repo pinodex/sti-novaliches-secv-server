@@ -12,7 +12,8 @@ const Student = use('App/Model/Student'),
       StudentWsAuth = use('App/Components/StudentWsAuth'),
       ElectionRepository = use('App/Repositories/ElectionRepository'),
       Helpers = use('Helpers'),
-      Event = use('Event')
+      Event = use('Event'),
+      Ws = use('Ws')
 
 const fs = require('fs')
 
@@ -77,7 +78,8 @@ class VoteController {
     vote.setVotes(data.ballot)
     yield vote.commit()
 
-    this.socket.toMe().emit('cast')
+    this.socket.toMe().emit('casted')
+    Ws.io.of('live').emit('casted')
   }
 }
 

@@ -27,33 +27,35 @@ class Result {
       const candidates = []
       let totalVotes = 0
 
-      position.relations.candidates.values().each(function (candidate, i) {
-        if (!(candidate.relations.votes instanceof Array)) {
-          totalVotes += candidate.relations.votes.size()
-        }
-      })
+      if (!(position.relations.candidates instanceof Array)) {
+        position.relations.candidates.values().each(function (candidate, i) {
+          if (!(candidate.relations.votes instanceof Array)) {
+            totalVotes += candidate.relations.votes.size()
+          }
+        })
 
-      position.relations.candidates.values().each(function (candidate, i) {
-        const entry = {
-          name: candidate.name,
-          votes: 0,
-          percentage: 0
-        }
+        position.relations.candidates.values().each(function (candidate, i) {
+          const entry = {
+            name: candidate.name,
+            votes: 0,
+            percentage: 0
+          }
 
-        if (anonymous) {
-          entry.name = `Candidate ${Result.alphabet[i]}`
-        }
+          if (anonymous) {
+            entry.name = `Candidate ${Result.alphabet[i]}`
+          }
 
-        if (!(candidate.relations.votes instanceof Array)) {
-          entry.votes = candidate.relations.votes.size()
-        }
+          if (!(candidate.relations.votes instanceof Array)) {
+            entry.votes = candidate.relations.votes.size()
+          }
 
-        if (entry.votes > 0 && totalVotes > 0) {
-          entry.percentage = ((entry.votes / totalVotes) * 100).toFixed(1)
-        }
+          if (entry.votes > 0 && totalVotes > 0) {
+            entry.percentage = ((entry.votes / totalVotes) * 100).toFixed(1)
+          }
 
-        candidates.push(entry)
-      })
+          candidates.push(entry)
+        })
+      }
 
       const entry = {
         position: {

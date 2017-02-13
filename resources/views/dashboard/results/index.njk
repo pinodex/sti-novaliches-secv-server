@@ -41,6 +41,10 @@
                     <td class="fit">{{ candidate.votes }}</td>
                     <td class="fit">{{ candidate.percentage }}%</td>
                   </tr>
+                {% else %}
+                  <tr>
+                    <td colspan="3">No results</td>
+                  </tr>
                 {% endfor %}
               </tbody>
             </table>

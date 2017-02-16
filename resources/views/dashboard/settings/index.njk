@@ -1,0 +1,67 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Settings' %}
+{% set active_nav = 'settings' %}
+
+{% set error = old('error') %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-12 columns">
+          {% include '../../partials/flash' %}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-4 columns">
+          <form action="{{ url('dashboard.settings') }}" method="post">
+            {{ csrfField }}
+            <div class="row">
+              <div class="large-12 columns">
+                <label>
+                  Show names in live view
+
+                  <select name="show_names">
+                    {% if old('show_names', settings.show_names) == 'true' %}
+                      <option value="true" selected>Yes</option>
+                    {% else %}
+                      <option value="true">Yes</option>
+                    {% endif %}
+
+                    {% if old('show_names', settings.show_names) == 'false' %}
+                      <option value="false" selected>No</option>
+                    {% else %}
+                      <option value="false">No</option>
+                    {% endif %}
+                  </select>
+                </label>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="large-12 columns">
+                <button type="submit" class="button">Save Changes</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="large-6 columns">
+          <form action="{{ url('dashboard.settings.update_live') }}" method="post">
+            {{ csrfField }}
+            
+            <button class="button warning" type="submit">Force Update Live View</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

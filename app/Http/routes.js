@@ -155,3 +155,17 @@ Route.group('dashboard.stats', function () {
 })
 .prefix('dashboard/stats')
 .middleware('auth:admin')
+
+Route.group('dashboard.settings', function () {
+
+  Route
+    .route('/', ['GET', 'POST'], 'Dashboard/SettingsController.index')
+    .as('dashboard.settings')
+
+  Route
+    .post('update_live', 'Dashboard/SettingsController.updateLive')
+    .as('dashboard.settings.update_live')
+
+})
+.prefix('dashboard/settings')
+.middleware('auth:admin')

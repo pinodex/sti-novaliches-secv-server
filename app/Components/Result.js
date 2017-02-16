@@ -7,9 +7,12 @@
  * Copyright 2017, Raphael Marco <raphaelmarco@outlook.com>
  */
 
-const Position = use('App/Model/Position')
-const Candidate = use('App/Model/Candidate')
-const Vote = use('App/Model/Vote')
+const Position = use('App/Model/Position'),
+      Candidate = use('App/Model/Candidate'),
+      Setting = use('App/Model/Setting'),
+      Vote = use('App/Model/Vote'),
+      Helpers = use('Helpers'),
+      fs = require('fs')
 
 class Result {
   static get alphabet () {
@@ -17,6 +20,12 @@ class Result {
   }
 
   static * get (anonymous = true) {
+    let showNames = yield Setting.find('show_names')
+
+    if (showNames != null && showNames.value == 'true') {
+      anonymous = false
+    }
+
     const data = []
     const positions = yield Position.query()
       .with('candidates', 'candidates.votes')
@@ -37,6 +46,7 @@ class Result {
         position.relations.candidates.values().each(function (candidate, i) {
           const entry = {
             name: candidate.name,
+            photo: null,
             votes: 0,
             percentage: 0
           }
@@ -51,6 +61,14 @@ class Result {
 
           if (entry.votes > 0 && totalVotes > 0) {
             entry.percentage = ((entry.votes / totalVotes) * 100).toFixed(1)
+          }
+
+          if (!anonymous) {
+            const photoPath = Helpers.storagePath(`uploads/${candidate.photo}`)
+
+            if (candidate.photo != null && fs.existsSync(photoPath)) {
+              entry.photo = fs.readFileSync(photoPath)
+            }
           }
 
           candidates.push(entry)

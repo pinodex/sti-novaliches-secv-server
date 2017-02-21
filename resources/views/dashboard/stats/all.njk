@@ -1,0 +1,92 @@
+{% extends '../../layouts/dashboard' %}
+
+{% set page_title = 'Stats' %}
+{% set active_nav = 'stats' %}
+
+{% set error = old('error') %}
+
+{% block subcontent %}
+  <div class="row page-heading">
+    <div class="small-6 columns">
+      <h4>{{ page_title }}</h4>
+    </div>
+  </div>
+
+  <div class="row page-content">
+    <div class="large-12 columns">
+      <div class="row">
+        <div class="large-12 columns">
+          {% include '../../partials/flash' %}
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-6 columns">
+          <table>
+            <tbody>
+              <tr>
+                <td>Total Students</td>
+                <td>{{ totalStudents }}</td>
+              </tr>
+
+              <tr>
+                <td>Students Voted</td>
+                <td>{{ studentsVoted }}</td>
+              </tr>
+
+              <tr>
+                <td>Remaining Students</td>
+                <td>{{ totalStudents - studentsVoted }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="large-12 columns">
+          <table>
+            <tbody>
+              {% for vote in votes %}
+                <tr>
+                  <td rowspan="6" valign="top">{{ vote.student.name }}</td>
+                  <td>{{ vote.candidates[0].position.name }}</td>
+                  <td>{{ vote.candidates[0].name }}</td>
+                </tr>
+
+                <tr>
+                  <td>{{ vote.candidates[1].position.name }}</td>
+                  <td>{{ vote.candidates[1].name }}</td>
+                </tr>
+
+                <tr>
+                  <td>{{ vote.candidates[2].position.name }}</td>
+                  <td>{{ vote.candidates[2].name }}</td>
+                </tr>
+
+                <tr>
+                  <td>{{ vote.candidates[3].position.name }}</td>
+                  <td>{{ vote.candidates[3].name }}</td>
+                </tr>
+
+                <tr>
+                  <td>{{ vote.candidates[4].position.name }}</td>
+                  <td>{{ vote.candidates[4].name }}</td>
+                </tr>
+
+                <tr>
+                  <td>{{ vote.candidates[5].position.name }}</td>
+                  <td>{{ vote.candidates[5].name }}</td>
+                </tr>
+
+                <tr>
+                  <td colspan="3"></td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

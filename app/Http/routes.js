@@ -152,6 +152,10 @@ Route.group('dashboard.stats', function () {
     .get('/', 'Dashboard/StatsController.index')
     .as('dashboard.stats')
 
+  Route
+    .get('all', 'Dashboard/StatsController.all')
+    .as('dashboard.stats.all')
+
 })
 .prefix('dashboard/stats')
 .middleware('auth:admin')
